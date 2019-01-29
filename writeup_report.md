@@ -1,18 +1,7 @@
-# **Behavioral Cloning** 
-
-**Behavioral Cloning Project**
-
-The goals / steps of this project are the following:
-* Use the simulator to collect data of good driving behavior
-* Build, a convolution neural network in Keras that predicts steering angles from images
-* Train and validate the model with a training and validation set
-* Test that the model successfully drives around track one without leaving the road
-* Summarize the results with a written report
+# **Behavioral Cloning**
 
 
 [//]: # (Image References)
-
-[image1]: ./examples/placeholder.png "Model Visualization"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -70,14 +59,17 @@ augmented the data by flipping the images.
 
 #### 1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to start with something I'm familiar with, then explore more 
+powerful networks.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate 
-because ...
+My first step was to use a convolution neural network model similar to Lenet. I thought this model might be appropriate 
+because it's famous for image classification, and as a convolutional network it works with a wide range of image sizes. 
+Later I adopted a even more powerful network developed by Nivea, which is a architecture they use to drive a real car
+autonomously.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation
 set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the 
-validation set. This implied that the model was overfitting. 
+validation set. This implied that the model was overfitting.
 
 To combat the overfitting, I modified the model so that it has a 0.2 dropout rate after the first three convolutional layers.
 
@@ -90,12 +82,22 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 #### 2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers 
-and layer sizes ...
+The final model architecture (model.py lines 60-75) consisted of a convolution neural network with the following layers 
+and layer sizes starting from the bottom:
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
+* Normalization layer
+* Convolutional layer with 5*5 kernel, filter size 24 and activation with Relu
+* Dropout layer with 0.2 dropout rate
+* Convolutional layer with 5*5 kernel, filter size 36 and activation with Relu
+* Dropout layer with 0.2 dropout rate
+* Convolutional layer with 5*5 kernel, filter size 48 and activation with Relu
+* Dropout layer with 0.2 dropout rate
+* Convolutional layer with 3*3 kernel, filter size 64 and activation with Relu
+* Convolutional layer with 3*3 kernel, filter size 64 and activation with Relu
+* Fully connected layer with 100 units
+* Fully connected layer with 50 units
+* Fully connected layer with 10 units
+* Fully connected layer with 1 units
 
 #### 3. Creation of the Training Set & Training Process
 
