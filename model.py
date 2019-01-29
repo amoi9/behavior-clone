@@ -6,12 +6,14 @@ from keras.layers import Flatten, Lambda, Dense, Cropping2D, Dropout
 from keras.layers.convolutional import Convolution2D
 from keras.layers.pooling import MaxPooling2D
 
+# Read the image, convert to RGB.
 data_path = "mydata/"
 def prepare_image(source_path):
     path = data_path + "IMG/"
     file_name = source_path.split('/')[-1]
     return cv2.cvtColor(cv2.imread(path + file_name), cv2.COLOR_BGR2RGB)
 
+# Read the csv log file, return all the samples.
 def read_samples():
     lines = []
     with open(data_path + '/driving_log.csv') as csvfile:
@@ -20,6 +22,8 @@ def read_samples():
             lines.append(line)
     return lines[1:] 
 
+# Generate features and labels for training. 
+# Read the left, right and center images, and augment the dataset by flipping the images.
 def generate_data(samples):
     images = []
     angles = []
@@ -48,6 +52,7 @@ def generate_data(samples):
     y_train = np.array(angles)
     return X_train, y_train
 
+# Trains the model using Keras and convolutional neural networks.
 def train():
     samples = read_samples()
     X_train, y_train = generate_data(samples)
